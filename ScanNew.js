@@ -12,9 +12,13 @@ if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir);
 }
 
-// Function to generate a random IP address
+// Function to generate a random IP address, avoiding 127 and 0
 function getRandomIp() {
-  return `${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
+  let ip;
+  do {
+    ip = `${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
+  } while (ip.startsWith('127.') || ip.startsWith('0.'));
+  return ip;
 }
 
 // Timeout wrapper for the scan function
